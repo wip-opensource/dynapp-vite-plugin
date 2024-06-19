@@ -5,26 +5,11 @@ import fs from 'fs-extra';
 import ora from 'ora';
 import * as readline from 'readline';
 import { fileURLToPath } from 'url';
+import { DynappConfig } from './interface.js';
+import { getDynappConfig } from './util.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-export const getDynappConfig = () => {
-  const findConfigFile = (currentDir: string): DynappConfig => {
-    const configPath = path.join(currentDir, 'dynappconfig.json');
-    if (fs.existsSync(configPath)) {
-      const rawData = fs.readFileSync(configPath, 'utf-8');
-      return JSON.parse(rawData);
-    }
-    const parentDir = path.dirname(currentDir);
-    if (currentDir === parentDir) {
-      throw new Error('\n\n\ndynappconfig.json not found in any parent directories.\n\n\n');
-    }
-    return findConfigFile(parentDir);
-  };
-
-  return findConfigFile(process.cwd()); // Start searching from the current working directory
-};
 
 const getDistFiles = (folder: string) => {
   const result: string[] = [];
@@ -148,17 +133,6 @@ const willPublish = (question: string): Promise<string> => {
     });
   });
 };
-
-interface DynappConfig {
-  username: string;
-  password: string;
-  group: string;
-  app: string;
-  baseUrl: string;
-  workpath: string;
-  rungroup: string;
-  runapp: string;
-}
 
 export const main = async () => {
   try {

@@ -5,23 +5,9 @@ import fs from 'fs-extra';
 import ora from 'ora';
 import * as readline from 'readline';
 import { fileURLToPath } from 'url';
+import { getDynappConfig } from './util.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-export const getDynappConfig = () => {
-    const findConfigFile = (currentDir) => {
-        const configPath = path.join(currentDir, 'dynappconfig.json');
-        if (fs.existsSync(configPath)) {
-            const rawData = fs.readFileSync(configPath, 'utf-8');
-            return JSON.parse(rawData);
-        }
-        const parentDir = path.dirname(currentDir);
-        if (currentDir === parentDir) {
-            throw new Error('\n\n\ndynappconfig.json not found in any parent directories.\n\n\n');
-        }
-        return findConfigFile(parentDir);
-    };
-    return findConfigFile(process.cwd()); // Start searching from the current working directory
-};
 const getDistFiles = (folder) => {
     const result = [];
     const files = fs.readdirSync(folder);

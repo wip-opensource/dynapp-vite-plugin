@@ -8,4 +8,4 @@ register({
     project: resolve(__dirname, '../tsconfig.json')
 });
 const mainPath = resolve(__dirname, './main.js');
-import(pathToFileURL(mainPath).toString());
+import(pathToFileURL(mainPath).toString()).catch(console.error);
