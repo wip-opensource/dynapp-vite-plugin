@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "pnpm run build && node ./dist/main.js",
     "build": "tsc",
-    "postinstall": "node install.js"
+    "postinstall": "node install.mjs"
   },
   "author": "",
   "license": "ISC",
