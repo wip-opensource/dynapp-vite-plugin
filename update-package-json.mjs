@@ -7,6 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function findPackageJson(currentDir) {
+  if (currentDir.includes('node_modules')) {
+    return null;
+  }
+
   const packageJsonPath = path.join(currentDir, 'package.json');
   console.log(`Looking for package.json at ${packageJsonPath}`);
 
