@@ -7,16 +7,18 @@ const __dirname = path.dirname(__filename);
 
 const updatePackageJsonPath = path.resolve(__dirname, 'update-package-json.mjs');
 
-exec(`node ${updatePackageJsonPath}`, (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Error executing script: ${error.message}`);
-    return;
-  }
+setTimeout(() => {
+  exec(`node ${updatePackageJsonPath}`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing script: ${error.message}`);
+      return;
+    }
 
-  if (stderr) {
-    console.error(`Script error output: ${stderr}`);
-    return;
-  }
+    if (stderr) {
+      console.error(`Script error output: ${stderr}`);
+      return;
+    }
 
-  console.log(`Script output: ${stdout}`);
-});
+    console.log(`Script output: ${stdout}`);
+  });
+}, 5000); // Delay execution by 5 seconds
