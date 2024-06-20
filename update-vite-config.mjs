@@ -14,7 +14,7 @@ function findViteConfig(currentDir) {
   }
 
   const parentDir = path.dirname(currentDir);
-  
+
   if (currentDir === parentDir) {
     return null;
   }
@@ -31,18 +31,22 @@ async function updateViteConfig() {
       process.exit(1);
     }
 
-    const viteConfigContent = fs.readFileSync(viteConfigPath, 'utf-8');
+    let viteConfigContent = fs.readFileSync(viteConfigPath, 'utf-8');
 
     // Check if the plugin is already imported
     if (!viteConfigContent.includes('DynappProxy')) {
       const importStatement = "import { DynappProxy } from 'dynapp-publish-vue3';\n";
-      const pluginUsage = ' plugins: [\n    DynappProxy(),';
 
-      const updatedContent = viteConfigContent
-        .replace(/^import/m, `${importStatement}import`)
-        .replace(/plugins: \[/, pluginUsage);
+      // Insert the import statement at the top of the file
+      if (!viteConfigContent.includes(importStatement)) {
+        viteConfigContent = importStatement + viteConfigContent;
+      }
 
-      fs.writeFileSync(viteConfigPath, updatedContent);
+      // Use a regular expression to insert the plugin into the plugins array
+      const pluginsRegex = /plugins:\s*\[/;
+      viteConfigContent = viteConfigContent.replace(pluginsRegex, match => `${match}\n    DynappProxy(),`);
+
+      fs.writeFileSync(viteConfigPath, viteConfigContent);
       console.log('Updated vite.config.mts');
     } else {
       console.log('vite.config.mts already updated');
