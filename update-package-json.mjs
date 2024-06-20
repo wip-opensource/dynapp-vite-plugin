@@ -1,9 +1,19 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Helper to get the current directory of the file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Path to the root directory (two levels up from node_modules)
+const rootDir = path.resolve(__dirname, '../../');
+
+// Path to the package.json file in the root directory
+const packageJsonPath = path.join(rootDir, 'package.json');
 
 async function updatePackageJson() {
     try {
-        const packageJsonPath = path.join(process.cwd(), 'package.json');
         console.log('Updating package.json at:', packageJsonPath);
 
         // Read the existing package.json file
