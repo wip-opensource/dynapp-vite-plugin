@@ -26,11 +26,28 @@ async function updatePackageJson() {
   console.log('Updated package.json');
 }
 
+// Function to recursively find vite.config.mts
+function findViteConfig(currentDir) {
+  const viteConfigPath = path.join(currentDir, 'vite.config.mts');
+
+  if (fs.existsSync(viteConfigPath)) {
+    return viteConfigPath;
+  }
+
+  const parentDir = path.dirname(currentDir);
+  
+  if (currentDir === parentDir) {
+    return null;
+  }
+
+  return findViteConfig(parentDir);
+}
+
 // Function to update vite.config.mts
 async function updateViteConfig() {
-  const viteConfigPath = path.resolve(process.cwd(), 'vite.config.mts');
+  const viteConfigPath = findViteConfig(process.cwd());
 
-  if (!fs.existsSync(viteConfigPath)) {
+  if (!viteConfigPath) {
     console.error('vite.config.mts not found');
     process.exit(1);
   }
