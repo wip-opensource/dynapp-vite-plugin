@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "pnpm run build && node ./dist/main.js",
     "build": "tsc",
-    "postinstall": "node update-package-json.mjs && node update-vite-config.mjs"
+    "postinstall": "node update-package-json.mjs"
   },
   "author": "",
   "license": "ISC",

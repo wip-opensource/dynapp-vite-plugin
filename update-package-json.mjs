@@ -1,18 +1,14 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Helper to get the current directory of the file
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Path to the package.json file
-const packageJsonPath = path.join(__dirname, 'package.json');
 
 async function updatePackageJson() {
     try {
+        const packageJsonPath = path.join(process.cwd(), 'package.json');
+        console.log('Updating package.json at:', packageJsonPath);
+
         // Read the existing package.json file
         const data = await fs.readFile(packageJsonPath, 'utf8');
+        console.log('Read package.json successfully.');
 
         // Parse the JSON data
         const packageJson = JSON.parse(data);
