@@ -10,7 +10,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "pnpm run build && node ./dist/main.js",
     "build": "tsc",
-    "update-package-json": "node update-package-json.mjs",
     "postinstall": "node update-vite-config.mjs"
   },
   "author": "Jonatan Robertsson <jonatanr@wip.se>",
