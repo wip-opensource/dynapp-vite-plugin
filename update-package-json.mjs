@@ -7,9 +7,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function findPackageJson(currentDir) {
-  console.log(`Looking for package.json at ${currentDir}`);
+  if (currentDir.includes('node_modules')) {
+    return null;
+  }
 
   const packageJsonPath = path.join(currentDir, 'package.json');
+  console.log(`Looking for package.json at ${packageJsonPath}`);
 
   if (fs.existsSync(packageJsonPath)) {
     return packageJsonPath;
@@ -26,7 +29,7 @@ function findPackageJson(currentDir) {
 
 async function updatePackageJson() {
   try {
-    const packageJsonPath = findPackageJson(path.resolve(__dirname, '../../..')); // Starting the search outside node_modules
+    const packageJsonPath = findPackageJson(process.cwd());
 
     if (!packageJsonPath) {
       console.error('package.json not found');
