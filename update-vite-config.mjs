@@ -36,7 +36,7 @@ async function updateViteConfig() {
     // Check if the plugin is already imported
     if (!viteConfigContent.includes('DynappProxy')) {
       const importStatement = "import { DynappProxy } from 'dynapp-publish-vue3';\n";
-      const pluginUsage = '  plugins: [\n    DynappProxy(),';
+      const pluginUsage = 'plugins: [\n    DynappProxy(),';
 
       const updatedContent = viteConfigContent
         .replace(/^import/m, `${importStatement}import`)
