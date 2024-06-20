@@ -135,7 +135,7 @@ export const main = async () => {
         const distFolder = "./dist";
         const distFiles = getDistFiles(distFolder);
         const prefix = await setPrefix("Prefix:", "web") + "/";
-        const isPublish = await willPublish(`Do you want to publish to: ${url}/${prefix}? (Y/N) `);
+        const isPublish = await willPublish(`Do you want to publish to: ${url}/${prefix}? (y/N) `);
         if (isPublish === "y") {
             await clearDataItems(dynappConfig, prefix);
             await uploadDataItems(dynappConfig, prefix, distFiles, distFolder);
