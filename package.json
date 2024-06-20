@@ -12,7 +12,7 @@
     "build": "tsc",
     "postinstall": "node update-vite-config.mjs"
   },
-  "author": "",
+  "author": "Jonatan Robertsson <jonatanr@wip.se>",
   "license": "ISC",
   "description": "",
   "dependencies": {
