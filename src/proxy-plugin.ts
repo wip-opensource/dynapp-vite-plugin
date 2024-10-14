@@ -13,11 +13,11 @@ function getProxyTarget(): string {
   const runapp = config.runapp;
 
   // Construct the target URL based on the JSON values
-  
-  const targetUrl = rungroup && runapp 
-  ? `/dynapp-server/public/${rungroup}/${runapp}` 
+
+  const targetUrl = rungroup && runapp
+  ? `/dynapp-server/public/${rungroup}/${runapp}`
   : `/dynapp-server/public/${group}/${app}`;
-  
+
   console.log('Proxy Target URL:', targetUrl);
 
   return targetUrl;
