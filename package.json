@@ -1,5 +1,5 @@
 {
-  "name": "dynapp-publish-vue3",
+  "name": "dynapp-vite-plugin",
   "version": "1.0.0",
   "type": "module",
   "bin": {
