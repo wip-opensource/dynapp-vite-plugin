@@ -23,6 +23,14 @@ function getProxyTarget(): string {
   return targetUrl;
 }
 
+// Function to get the dynamic proxy base url
+function getProxyBaseUrl(): string {
+  // Resolve the path to your JSON file
+  const config = getDynappConfig();
+
+  return config.baseUrl || 'https://dynappbeta.wip.se';
+}
+
 export function DynappProxy(): Plugin {
   return {
     name: 'dynamic-proxy-plugin',
@@ -35,7 +43,7 @@ export function DynappProxy(): Plugin {
         config.server.proxy = config.server.proxy || {};
 
         config.server.proxy['/dynapp-server'] = {
-          target: 'https://dynappbeta.wip.se',
+          target: getProxyBaseUrl(),
           changeOrigin: true,
           rewrite: (path: string) => {
             return path.replace(/^\/dynapp-server/, targetUrl);
