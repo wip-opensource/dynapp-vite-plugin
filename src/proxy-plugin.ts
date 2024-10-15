@@ -23,10 +23,27 @@ function getProxyTarget(config : DynappConfig): string {
 
 export function DynappProxy(): Plugin {
   const dynappConfig = getDynappConfig();
+  var dynappInfo = {
+    host: '',
+    app: '',
+    group: ''
+  };
+  if (dynappConfig) {
+    let baseUrl = dynappConfig.baseUrl;
+    if (baseUrl) {
+      dynappInfo.host = (baseUrl.split('://')[1] || '').split('/')[0];
+    }
+    dynappInfo.group = dynappConfig.rungroup || dynappConfig.group || '';
+    dynappInfo.app = dynappConfig.runapp || dynappConfig.app || '';
+  }
+  process.env = { ...process.env, ...{ VITE_DYNAPP_INFO: JSON.stringify(dynappInfo) } };
 
   return {
-    name: 'dynamic-proxy-plugin',
-    config(config, { command }) {
+    name: 'dynapp-vite-plugin',
+    config(
+      config: any,
+      { command }: { command: string }
+    ) {
       // Check if we are in serve mode
       if (command === 'serve') {
         const targetUrl = getProxyTarget(dynappConfig);
