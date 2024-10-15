@@ -1,8 +1,6 @@
 import { getDynappConfig } from './util.js';
 // Function to get the dynamic proxy target
-function getProxyTarget() {
-    // Resolve the path to your JSON file
-    const config = getDynappConfig();
+function getProxyTarget(config) {
     // Extract the necessary values
     const group = config.group;
     const app = config.app;
@@ -16,17 +14,32 @@ function getProxyTarget() {
     return targetUrl;
 }
 export function DynappProxy() {
+    const dynappConfig = getDynappConfig();
+    var dynappInfo = {
+        host: '',
+        app: '',
+        group: ''
+    };
+    if (dynappConfig) {
+        let baseUrl = dynappConfig.baseUrl;
+        if (baseUrl) {
+            dynappInfo.host = (baseUrl.split('://')[1] || '').split('/')[0];
+        }
+        dynappInfo.group = dynappConfig.rungroup || dynappConfig.group || '';
+        dynappInfo.app = dynappConfig.runapp || dynappConfig.app || '';
+    }
+    process.env = { ...process.env, ...{ VITE_DYNAPP_INFO: JSON.stringify(dynappInfo) } };
     return {
-        name: 'dynamic-proxy-plugin',
+        name: 'dynapp-vite-plugin',
         config(config, { command }) {
             // Check if we are in serve mode
             if (command === 'serve') {
-                const targetUrl = getProxyTarget();
+                const targetUrl = getProxyTarget(dynappConfig);
                 // Update Vite config
                 config.server = config.server || {};
                 config.server.proxy = config.server.proxy || {};
                 config.server.proxy['/dynapp-server'] = {
-                    target: 'https://dynappbeta.wip.se',
+                    target: dynappConfig.baseUrl || 'https://dynappbeta.wip.se',
                     changeOrigin: true,
                     rewrite: (path) => {
                         return path.replace(/^\/dynapp-server/, targetUrl);
