@@ -27,8 +27,8 @@ async function updateViteConfig() {
     const viteConfigPath = findViteConfig(process.cwd());
 
     if (!viteConfigPath) {
-      console.error('vite.config.mts not found');
-      process.exit(1);
+      console.warn('vite.config.mts not found');
+      return
     }
 
     let viteConfigContent = fs.readFileSync(viteConfigPath, 'utf-8');
