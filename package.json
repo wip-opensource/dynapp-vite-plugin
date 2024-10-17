@@ -1,6 +1,6 @@
 {
   "name": "dynapp-vite-plugin",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "type": "module",
   "bin": {
     "dynapp-publish": "./dist/cli.js"
