@@ -18,7 +18,8 @@ export function DynappProxy() {
     var dynappInfo = {
         host: '',
         app: '',
-        group: ''
+        group: '',
+        devTool: 'vite'
     };
     if (dynappConfig) {
         let baseUrl = dynappConfig.baseUrl;
