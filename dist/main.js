@@ -4,10 +4,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import ora from 'ora';
 import * as readline from 'readline';
-import { fileURLToPath } from 'url';
 import { getDynappConfig } from './util.js';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const getDistFiles = (folder) => {
     const result = [];
     const files = fs.readdirSync(folder);
